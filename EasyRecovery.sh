@@ -18,7 +18,6 @@ CLS='printf "\033c"'
 # End section, thanks Firon!
 
 f_ROOT () {
-export PS1="\e[0;36m[\u@\h \W]\$ \e[m "
 $CLS
 sleep 3
 echo "Pushing Recovery Script"
@@ -58,7 +57,6 @@ f_ROOT
 }
 
 f_DEVICEMENU () {
-export PS1="\e[0;32m[\u@\h \W]\$ \e[m " 
 $CLS
 unset choice
 while :
@@ -124,14 +122,6 @@ echo "             Settings - Developer Options - Android Debugging"
 echo
 echo "                       Or in 4.2 and higher"
 echo " Settings - About phone - Tap build number 7 times - Use ICS instructions"
-export PS1="\e[0;31m[\u@\h \W]\$ \e[m "
-sleep 2
-export PS1="\e[0;32m[\u@\h \W]\$ \e[m "
-sleep 2
-export PS1="\e[0;31m[\u@\h \W]\$ \e[m "
-sleep 2
-export PS1="\e[0;32m[\u@\h \W]\$ \e[m "
-echo 
 echo 
 echo 
 echo 
@@ -230,7 +220,7 @@ case $choice in
 1) f_WARNING ;;
 2) f_DEVICEMENU ;;
 3) $ADB reboot recovery && sleep 21 && f_ROOT ;;
-4) f_LOCK && export PS1="\e[0;35m[\u@\h \W]\$ \e[m " ;;
+4) f_LOCK ;;
 5) exit 0 ;;
 *) echo "\"$choice\" is not valid"
 sleep 2 ;;
