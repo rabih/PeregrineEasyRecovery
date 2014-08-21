@@ -140,10 +140,11 @@ echo.
 echo.
 echo Menu:
 echo.
-echo 1) This is a stock locked phone
-echo 2) This phone has its bootloader unlocked but not root/recovery
-echo 3) Already got recovery? just need root?
-echo 4) Quit
+echo 1) Unlock the bootloader
+echo 2) This phone has its bootloader unlocked but no root/recovery
+echo 3) Just need root? (recovery required)
+echo 4) Tired of having an unlocked bootloader? Lock it here.
+echo 5) Quit
 echo.
 echo.
 set menu=""
@@ -153,7 +154,8 @@ echo.
 if "%menu%"=="1" goto :WARNING
 if "%menu%"=="2" goto :DEVICEMENU
 if "%menu%"=="3" %AdbExe% reboot recovery && ping 127.0.0.1 -n 22 -w 1000 > nul && goto :ROOT
-if "%menu%"=="4" goto :eof
+if "%menu%"=="4" goto :LOCK
+if "%menu%"=="5" goto :eof
 goto :bootmenu
 
 REM This is the part of the script that unlocks the bootloader and then forwards onto menu so users can pick their device
@@ -175,7 +177,7 @@ echo   Warning
 echo   Warning
 echo   Warning
 echo    THIS WILL WIPE ALL OF YOUR APPS, CONTACTS GAMESAVES ETC EVERYTHING
-echo                        INCLUDING YOUR SD CARD
+echo                        on YOUR _internal_ SDCARD
 echo   Warning
 echo   Warning
 ping -n 2 127.0.0.1 > nul
@@ -205,18 +207,33 @@ if "%menu%"=="n" goto :eof
 goto :WARNING
 
 :UNLOCK
-%AdbExe% reboot bootloader
+%AdbExe% wait-for-device reboot bootloader
 @ping 127.0.0.1 -n 6 -w 1000 > nul
 cls
 echo if your phone is not displayed or it stays on waiting for device for too long then there was an error with the drivers or its not in fastboot
 echo.
 %Fastboot% devices
 echo.
-echo Please look at your phone
+echo Please look at your phone and see its in the fastboot menu
 echo.
 echo.
-echo Using Volume up and down please choose the unlock option, hit power to make the selection
 echo.
+echo.
+echo go to http://bit.ly/UpVtsa and read the risks, continue to page 2
+pause
+echo are you sure???? Do you know the risks? Are you willing to do this??? pause
+$FASTBOOT oem get_unlock_data
+echo enter this code on page 2 as shown in the example:
+echo enter code on the website and press enter
+pause
+echo enter the key emailed to you here:
+set KEY=""
+set /p KEY=Please paste the number emailed here: 
+%Fastboot% oem unlock %key%
+echo FASTBOOT oem unlock %key%
+echo .
+echo Press enter to continue
+pause
 echo.
 %Fastboot% oem unlock
 echo.
@@ -257,6 +274,26 @@ echo.
 pause
 goto :DEVICEMENU
 
+:LOCK
+echo
+echo
+echo So the custom life isn't for you? Press enter to continue.
+pause
+echo Last chance to stick around.
+pause
+%AdbExe% reboot bootloader
+pause
+echo  when you see the fastboot screen press enter to continue.
+%Fastboot% oem lock
+echo Locking...
+pause
+echo Your bootloader is now locked.
+pause
+echo
+echo
+echo
+goto :BOOTMENU
+
 :DEVICEMENU
 cls
 echo.
@@ -268,7 +305,7 @@ echo Menu:
 echo.
 echo 1) Root and Install ClockworkMod
 echo 2) Root and Install OUDHS Recovery
-echo 3) Quit
+echo 3) No root or recovery desired. (quit)
 echo.
 echo.
 set menu=""

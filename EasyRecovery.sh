@@ -59,8 +59,6 @@ f_ROOT
 f_DEVICEMENU () {
 $CLS
 unset choice
-while :
-do
 case $choice in
 1) RECOVERY=CWM && f_FLASH ;;
 2) RECOVERY=TWRP && f_FLASH ;;
@@ -78,7 +76,6 @@ echo
 echo 
 echo 
 read choice
-done
 }
 
 f_UNLOCK () {
@@ -205,9 +202,9 @@ echo
 echo 
 echo "Menu:"
 echo 
-echo "1) This is a stock locked phone"
-echo "2) This phone has its bootloader unlocked but not root/recovery"
-echo "3) Already got recovery? just need root?"
+echo "1) This is a stock bootloader locked phone"
+echo "2) This phone has its bootloader unlocked but no root/recovery"
+echo "3) Just need root? (recovery required)"
 echo "4) Tired of having an unlocked bootloader? Lock it here."
 echo "5) Quit"
 echo 
