@@ -299,8 +299,7 @@ f_LOGO() {
 echo
 echo
 echo " So you want to get rid of the contract on bootup?"
-echo "Press enter to continue."
-pause
+sleep 2
 echo
 echo
 $CLS
@@ -310,7 +309,6 @@ $FASTBOOT flash logo Files/logo/peregrine_logo_mod.bin
 echo "flashing logo"
 sleep 6
 echo "             Enjoy!"
-pause
 sleep 5
 f_BOOTMENU
-
+}
