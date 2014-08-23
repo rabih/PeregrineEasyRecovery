@@ -4,15 +4,9 @@ cls
 color 0A
 echo.
 echo.
-echo.
-echo.
-echo.
-echo.
 echo                 Easy Recovery for Peregine variants
-echo.
+echo                 V1.1
 echo                           By somcom3x
-echo.
-echo.
 echo.
 echo.
 pause
@@ -20,15 +14,12 @@ cls
 echo.
 echo.
 echo.
-echo
-echo                   You need to enable usb debugging
-echo              Go to settings - applications - development
 echo.
-echo                         Or in ICS and higher
-echo            Settings - Developer Options - Android Debugging
+echo  You need to enable usb debugging.
+echo  On 4.4:
+echo  Settings - About phone - Tap build number 7 times - back key
+echo  Developer options - Android debugging
 echo.
-echo                         Or in 4.2 and higher
-echo  Settings - About phone - Tap build number 7 times - Use ICS instructions
 echo.
 color 0A
 ping -n 2 127.0.0.1 > nul
@@ -131,18 +122,20 @@ echo 1) Unlock the bootloader
 echo 2) This phone has its bootloader unlocked but no root/recovery
 echo 3) Just need root? (recovery required)
 echo 4) Tired of having an unlocked bootloader? Lock it here.
-echo 5) Quit
+echo 5) Flash the stock boot logo to remove the contract at boot.
+echo 6) Quit
 echo.
 echo.
 set menu=""
-set /p menu=Please type a number [1-4] and press enter 
+set /p menu=Please type a number [1-6] and press enter 
 echo.
 echo.
 if "%menu%"=="1" goto :WARNING
 if "%menu%"=="2" goto :DEVICEMENU
 if "%menu%"=="3" %AdbExe% reboot recovery && ping 127.0.0.1 -n 22 -w 1000 > nul && goto :ROOT
 if "%menu%"=="4" goto :LOCK
-if "%menu%"=="5" goto :eof
+if "%menu%"=="5" goto :LOGO
+if "%menu%"=="6" goto :eof
 goto :bootmenu
 
 REM This is the part of the script that unlocks the bootloader and then forwards onto menu so users can pick their device
@@ -250,6 +243,7 @@ pause
 goto :DEVICEMENU
 
 :LOCK
+cls
 echo
 echo
 echo So the custom life isn't for you? Press enter to continue.
@@ -272,7 +266,7 @@ goto :BOOTMENU
 :DEVICEMENU
 cls
 echo.
-echo                  EasyRecovery v1.0
+echo                  EasyRecovery v1.1
 echo.
 echo.
 echo.
@@ -289,10 +283,11 @@ echo.
 echo.
 if "%menu%"=="1" set RECOVERY=CWM
 if "%menu%"=="2" set RECOVERY=TWRP
-if "%menu%"=="3" goto :eof
+if "%menu%"=="3" goto :EOF
 goto :FLASH
 
 :FLASH
+cls
 echo are you sure you want to do this? Are you really?
 pause
 echo Last chance, press enter to continue
@@ -331,4 +326,30 @@ echo.
 echo Choose yes and enjoy root :)
 pause
 %AbdExe% reboot
+goto :BOOTMENU
+
+:LOGO
+echo.
+echo.
+echo So you want to get rid of the contract on bootup?
+echo.
+set cont=""
+set /p cont=Continue? Y or N?
+echo.
+echo.
+if "%cont%"=="Y" goto :LOGO2
+if "%cont%"=="y" goto :LOGO2
+if "%cont%"=="N" goto :EOF
+if "%cont%"=="n" goto :EOF
+
+:LOGO2
+cls
+echo.
+echo.
+%Fastboot% flash logo Files/logo/peregrine_logo_mod.bin
+echo.
+echo.
+ec              Enjoy!
+pause
+echo            Press enter to continue
 goto :BOOTMENU

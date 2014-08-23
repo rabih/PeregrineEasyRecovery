@@ -155,10 +155,6 @@ echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo 
 echo "  Warning"
 echo "  Warning"
-echo "  Warning"
-echo "  Warning"
-echo "  Warning"
-echo "  Warning"
 echo "   THIS WILL WIPE ALL OF YOUR APPS, CONTACTS GAMESAVES ETC EVERYTHING"
 echo "                      INCLUDING YOUR SD CARD"
 echo "  Warning"
@@ -298,3 +294,23 @@ echo
 echo "Press enter to continue"; read line
 $CLS
 f_BOOTMENU
+
+f_LOGO() {
+echo
+echo
+echo " So you want to get rid of the contract on bootup?"
+echo "Press enter to continue."
+pause
+echo
+echo
+$CLS
+echo
+echo
+$FASTBOOT flash logo Files/logo/peregrine_logo_mod.bin
+echo "flashing logo"
+sleep 6
+echo "             Enjoy!"
+pause
+sleep 5
+f_BOOTMENU
+
