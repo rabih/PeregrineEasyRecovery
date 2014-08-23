@@ -8,8 +8,6 @@ echo.
 echo.
 echo.
 echo.
-echo.
-echo.
 echo                 Easy Recovery for Peregine variants
 echo.
 echo                           By somcom3x
@@ -22,11 +20,7 @@ cls
 echo.
 echo.
 echo.
-echo.
-echo.
-echo.
-echo.
-echo.
+echo
 echo                   You need to enable usb debugging
 echo              Go to settings - applications - development
 echo.
@@ -115,16 +109,9 @@ cls
 echo.
 echo.
 echo.
-echo.
-echo.
-echo.
-echo.
-echo.
 echo                      Your device is: %MYDEVICE%
 echo.
 echo           If this is incorrect please exit this program
-echo.
-echo.
 echo.
 echo.
 pause
@@ -170,10 +157,6 @@ echo ///+++///+++///+++///+++///+++///+++///+++//////+++///
 ping -n 4 127.0.0.1 > nul
 cls
 color C0
-echo   Warning
-echo   Warning
-echo   Warning
-echo   Warning
 echo   Warning
 echo   Warning
 echo    THIS WILL WIPE ALL OF YOUR APPS, CONTACTS GAMESAVES ETC EVERYTHING
@@ -249,18 +232,10 @@ echo.
 echo.
 echo.
 echo.
-echo.
-echo.
-echo.
-echo                   You need to enable usb debugging again
-echo.
-echo                Go to settings - applications - development
-echo.
-echo                          Or in ICS and higher
-echo             Settings - Developer Options - Android Debugging
-echo.
-echo                         Or in 4.2 and higher
-echo  Settings - About phone - Tap build number 7 times - Use ICS instructions
+echo  You need to enable usb debugging again.
+echo  On 4.4:
+echo  Settings - About phone - Tap build number 7 times - back key
+echo  Developer options - Android debugging
 echo.
 color 0A
 ping -n 2 127.0.0.1 > nul
