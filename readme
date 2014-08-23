@@ -3,6 +3,12 @@ On linux, execute the bash script in terminal. ./EasyRecovery.sh
 
 Changelog:
 
+v1.1
+Bootlogo flash support
+Bootloader locking
+Bootloader unlocking
+TWRP added as an option
+
 v1.0 
 Initial release
 
