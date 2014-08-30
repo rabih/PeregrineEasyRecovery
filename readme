@@ -1,13 +1,20 @@
+Extract the zip
 
-On linux, execute the bash script in terminal. ./EasyRecovery.sh
+On linux/OS X, execute the bash script in terminal. ./EasyRecovery.sh
+On Windows, double click the .bat file
 
 Changelog:
+
+v1.2
+Added mfastboot support (currently unused in any flashing)
+Fix an issue with boot logo flashing
+Rewrote some instructions/warnings.
 
 v1.1
 Bootlogo flash support
 Bootloader locking
 Bootloader unlocking
-TWRP added as an option
+TWRP added as an option for recovery
 
 v1.0 
 Initial release
@@ -24,3 +31,5 @@ Rodderick
 Nubecoder 
 and many more :)
 Included in this script is koush's universal adb driver.
+
+Darkshado

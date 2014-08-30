@@ -3,19 +3,25 @@
 platform=`uname`;
 ADB=$PWD"/Files/tools/adb";
 FASTBOOT=$PWD"/Files/tools/fastboot";
+MFASTBOOT=$PWD"/Files/tools/mfastboot";
 cd "$(dirname "$0")"
 if [ -z $(which adb) ]; then
 	ADB=$PWD"/Files/tools/adb";
     FASTBOOT=$PWD"/Files/tools/fastboot";
+    MFASTBOOT=$PWD"/Files/tools/mfastboot";
 	if [ "$platform" == 'Darwin' ]; then
 		ADB=$PWD"/Files/tools/adb.osx"
 		FASTBOOT=$PWD"/Files/tools/fastboot.osx"
+        MFASTBOOT=$PWD"/Files/tools/mfastboot.osx";
+
 	fi
 fi
 chmod +x $ADB
 chmod +x $FASTBOOT
+chmod +x $MFASTBOOT
+
 CLS='printf "\033c"'
-# End section, thanks Firon!
+# End section, thanks Firon (LEGACY)!
 
 f_ROOT () {
 $CLS
@@ -64,7 +70,7 @@ case $choice in
 2) RECOVERY=TWRP && f_FLASH ;;
 esac
 echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++"
-echo "         All in One Root and Recovery v1.0"
+echo "         All in One Root and Recovery v1.2"
 echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo 
 echo 
@@ -155,8 +161,9 @@ echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo 
 echo "  Warning"
 echo "  Warning"
-echo "   THIS WILL WIPE ALL OF YOUR APPS, CONTACTS GAMESAVES ETC EVERYTHING"
-echo "                      INCLUDING YOUR SD CARD"
+echo "   THIS WILL WIPE ALL OF YOUR APPS, CONTACTS, GAMESAVES, etc..; EVERYTHING"
+echo "                      INCLUDING YOUR INTERNAL SD CARD"
+echo "   This will void whatever warranty is present on this device"
 echo "  Warning"
 echo "  Warning"; clear
 echo 
@@ -190,6 +197,16 @@ f_BOOTMENU () {
 unset choice
 while :
 do
+echo "             Peregrine EasyRecovery v1.2"
+echo "             by somcom3x @ XDA"
+echo
+echo
+echo
+echo
+echo
+echo
+sleep 5
+$CLS
 echo 
 echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo "Please Read Carefully"
@@ -198,7 +215,7 @@ echo
 echo 
 echo "Menu:"
 echo 
-echo "1) This is a stock bootloader locked phone"
+echo "1) Unlock the bootloader"
 echo "2) This phone has its bootloader unlocked but no root/recovery"
 echo "3) Just need root? (recovery required)"
 echo "4) Tired of having an unlocked bootloader? Lock it here."
@@ -303,10 +320,14 @@ sleep 2
 echo
 echo
 $CLS
+$ADB reboot bootloader
+sleep 6
+$CLS
 echo
-echo
-$FASTBOOT flash logo Files/logo/peregrine_logo_mod.bin
 echo "flashing logo"
+$FASTBOOT flash logo Files/logo/peregrine_logo_mod.bin
+sleep 3
+echo "flashed logo!"
 sleep 6
 echo "             Enjoy!"
 sleep 5

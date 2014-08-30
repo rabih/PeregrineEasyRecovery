@@ -5,7 +5,7 @@ color 0A
 echo.
 echo.
 echo                 Easy Recovery for Peregine variants
-echo                 V1.1
+echo                 V1.2
 echo                           By somcom3x
 echo.
 echo.
@@ -79,6 +79,30 @@ echo.
 pause
 goto :EOF
 :FoundFastboot
+cls
+@rem *** Find mFastboot.EXE or abort *********************************************
+set BatchFileDir=%~dp0
+set mFastboot=%BatchFileDir%/Files/tools/mfastboot.exe
+if exist "%mFastboot%" goto FoundmFastboot
+set Fastboot=%CD%\/Files/tools/mfastboot.exe
+if exist "%mFastboot%" goto FoundmFastboot
+set mFastboot=
+for %%f in ("mFastboot") do set mFastboot=%%~$PATH:f
+if not "%mFastboot%" == "" FoundmFastboot
+echo ERROR: Could not find "mFastboot.EXE" (have you installed it?)
+echo.
+echo To find mFastboot.EXE required for this script:
+echo ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+echo (1) Look in the same directory as the batch file ("%BatchFileDir%)
+echo.
+echo (2) Look in the current directory (%CD%)
+echo.
+echo (3) Look in the PATH, that is one of the following directories: %PATH%
+echo.
+pause
+goto :EOF
+:FoundmFastboot
+cls
 echo USING FASTBOOT: "%Fastboot%"
 echo.
 echo.
@@ -345,6 +369,9 @@ if "%cont%"=="n" goto :EOF
 :LOGO2
 cls
 echo.
+echo when your device is in the bootloader screen, press enter.
+%AbdExe% reboot bootloader
+pause
 echo.
 %Fastboot% flash logo Files/logo/peregrine_logo_mod.bin
 echo.
