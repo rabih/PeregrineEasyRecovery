@@ -290,7 +290,7 @@ goto :BOOTMENU
 :DEVICEMENU
 cls
 echo.
-echo                  EasyRecovery v1.1
+echo                  EasyRecovery v1.2
 echo.
 echo.
 echo.
@@ -330,6 +330,19 @@ echo please use the volume down button and select recovery and press volume up
 echo.
 echo.
 pause
+goto :ROOTSELECTION
+
+:ROOTSELECTION
+echo 1) Root and install superuser
+echo 2) Root and Install supersu
+echo 3) No root. (quit)
+set rootm=""
+set /p rootm=Please type a number [1-3] and press enter
+echo.
+echo.
+if "%menu%"=="1" set ROOTS=superuser
+if "%menu%"=="2" set ROOTS=supersu
+if "%menu%"=="3" goto :EOF
 goto :ROOT
 
 :ROOT
@@ -338,16 +351,16 @@ echo.
 echo.
 echo.
 echo.
-echo Pushing Recovery Script
+echo Pushing Recovery Root Script
 echo.
-%AdbExe% push Files/root/superuser.zip /storage/sdcard0/supersu.zip
-%AdbExe% push Files/root/command /cache/recovery/command
+%AdbExe% push Files/root/%ROOTS%/%ROOTS%.zip /storage/sdcard0/%ROOTS%.zip
+%AdbExe% push Files/root/%ROOTS%/command /cache/recovery/command
 %AdbExe% shell killall recovery
 echo.
 echo Running automated recovery commands
 echo.
 @ping 127.0.0.1 -n 3 -w 1000 > nul
-echo Choose yes and enjoy root :)
+echo Enjoy root :) Press enter to continue.
 pause
 %AbdExe% reboot
 goto :BOOTMENU

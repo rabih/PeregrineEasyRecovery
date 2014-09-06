@@ -24,10 +24,33 @@ CLS='printf "\033c"'
 # End section, thanks Firon (LEGACY)!
 
 f_ROOT () {
+unset ROOTSN
+case $ROOTSN in
+1) ROOTS=superuser ;;
+2) ROOTS=supersu ;;
+3) exit ;;
+*) echo "\"$ROOTSN\" is not valid"
+esac
+echo "Choose a root program"
+echo "Menu:"
+echo
+echo "1) Root and Install Superuser"
+echo "2) Root and Install SuperSU"
+echo "3) Do not root (quit)"
+echo
+echo
+read ROOTSN
+sleep 2
 $CLS
-sleep 3
+sleep 1
 echo "Pushing Recovery Script"
-$ADB push Files/root/supersu.zip /storage/sdcard0/supersu.zip
+echo " ... "
+sleep 1
+echo " ..................... "
+sleep 2
+echo " ........................ "
+sleep 1
+$ADB push Files/root/$ROOTS/$ROOTS.zip /storage/sdcard0/$ROOTS.zip
 $ADB push Files/root/command /cache/recovery/command
 $ADB shell killall recovery
 sleep 3
@@ -47,17 +70,17 @@ f_BOOTMENU
 f_FLASH () {
 $CLS
 $ADB reboot bootloader
-echo 
-echo 
-echo 
+echo
+echo
+echo
 echo        Flashing $RECOVERY..
 sleep 5
 $FASTBOOT flash recovery Files/recovery/$RECOVERY.img
 $CLS
-echo 
-echo 
+echo
+echo
 echo "Please press the volume down key to scroll to recovery and the volume up key to select."
-echo 
+echo
 echo "Press enter to continue when the recovery menu appears"; read line
 f_ROOT
 }
@@ -72,15 +95,15 @@ esac
 echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo "         All in One Root and Recovery v1.2"
 echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++"
-echo 
-echo 
+echo
+echo
 echo "Menu:"
-echo 
+echo
 echo "1) Root and Install ClockworkMod v6.0.5.0"
 echo "2) Root and Install TeamWin Recovery Project v2.7.1.0"
-echo 
-echo 
-echo 
+echo
+echo
+echo
 read choice
 }
 
@@ -100,24 +123,24 @@ echo "enter code on the website and press enter"; read line
 echo "enter the key emailed to you here:"
 read KEY
 $FASTBOOT oem unlock $KEY
-echo 
+echo
 echo "Press enter to continue"; read line
-echo 
-echo 
+echo
+echo
 $FASTBOOT reboot
 $CLS
 $ADB "wait-for-device" devices
 $CLS
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
+echo
+echo
+echo
+echo
+echo
+echo
+echo
+echo
 echo "                   You need to enable usb debugging again"
-echo 
+echo
 echo "                 Go to settings - applications - development"
 echo
 echo "                         Or in ICS and higher"
@@ -125,9 +148,9 @@ echo "             Settings - Developer Options - Android Debugging"
 echo
 echo "                       Or in 4.2 and higher"
 echo " Settings - About phone - Tap build number 7 times - Use ICS instructions"
-echo 
-echo 
-echo 
+echo
+echo
+echo
 echo "Press enter to continue"; read line
 f_ROOT
 }
@@ -154,11 +177,11 @@ $CLS
 unset choice
 while :
 do
-echo 
+echo
 echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo "Please Read Carefully"
 echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++"
-echo 
+echo
 echo "  Warning"
 echo "  Warning"
 echo "   THIS WILL WIPE ALL OF YOUR APPS, CONTACTS, GAMESAVES, etc..; EVERYTHING"
@@ -166,8 +189,8 @@ echo "                      INCLUDING YOUR INTERNAL SD CARD"
 echo "   This will void whatever warranty is present on this device"
 echo "  Warning"
 echo "  Warning"; clear
-echo 
-echo 
+echo
+echo
 case $choice in
 Y) f_UNLOCK ;;
 y) f_UNLOCK ;;
@@ -176,21 +199,17 @@ n) exit 0 ;;
 *) echo "\"$choice\" is not valid"
 sleep 2
 esac
-echo 
+echo
 echo "Do you wish to continue?"
-echo 
-echo 
+echo
+echo
 echo "Type Y/N"
-echo 
+echo
 read choice
 done
-f_EMPTY
+$CLS
 f_UNLOCK
 f_BOOTMENU
-}
-
-f_EMPTY () {
-echo
 }
 
 f_BOOTMENU () {
@@ -207,25 +226,25 @@ echo
 echo
 sleep 5
 $CLS
-echo 
+echo
 echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo "Please Read Carefully"
 echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++"
-echo 
-echo 
+echo
+echo
 echo "Menu:"
-echo 
+echo
 echo "1) Unlock the bootloader"
 echo "2) This phone has its bootloader unlocked but no root/recovery"
 echo "3) Just need root? (recovery required)"
 echo "4) Tired of having an unlocked bootloader? Lock it here."
 echo "5) Quit"
-echo 
-echo 
+echo
+echo
 echo -n "Your choice? : "
 read choice
-echo 
-echo 
+echo
+echo
 case $choice in
 1) f_WARNING ;;
 2) f_DEVICEMENU ;;
@@ -240,43 +259,34 @@ done
 
 
 $CLS
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
+echo
+echo
+echo
 echo "                     One Click Root and Recovery"
-echo 
+echo
 echo "              	   By Somcom3x @ XDA Developers"
 echo
 echo "                     Big Credits to ShabbyPenguin"
-echo 
-echo 
+echo
+echo
 echo "Press enter to continue"; read line
 $CLS
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo "                    You need to enable usb debugging first"
-echo 
-echo "                  Go to settings - applications - development"
-echo 
 echo
-echo "                         Or in ICS and higher"
-echo "             Settings - Developer Options - Android Debugging"
 echo
-echo  "                       Or in 4.2 and higher"
-echo  "Settings - About phone - Tap build number 7 times - Use ICS instructions"
-echo 
-echo 
+echo
+echo  "              You need to enable usb debugging first"
+echo
+echo  "              Go to settings - applications - development"
+echo
+echo
+echo  "              Or in ICS and higher"
+echo  "              Settings - Developer Options - Android Debugging"
+echo
+echo  "              Or in 4.2 and higher"
+echo  "              Settings - About phone - Tap build number 7 times "
+echo  "             -Use ICS instructions "
+echo
+echo
 echo "Press enter to continue"; read line
 $CLS
 cd $PWD
@@ -293,20 +303,20 @@ fi
 $CLS
 MYDEVICE=`$ADB shell getprop ro.product.model`
 rm -rf Files/Devices/*
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
-echo 
+echo
+echo
+echo
+echo
+echo
+echo
+echo
+echo
 echo "      		 	 Your device model is: $MYDEVICE"
 echo 
 echo " 		 If this is incorrect please exit this program"
-echo 
-echo 
-echo 
+echo
+echo
+echo
 echo 
 echo "Press enter to continue"; read line
 $CLS
