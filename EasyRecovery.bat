@@ -3,9 +3,11 @@
 cls
 color 0A
 echo.
+set Version=
+set Version=v1.3
 echo.
 echo                 Easy Recovery for Peregine variants
-echo                 V1.2
+echo                 %Version%
 echo                           By somcom3x
 echo.
 echo.
@@ -290,7 +292,7 @@ goto :BOOTMENU
 :DEVICEMENU
 cls
 echo.
-echo                  EasyRecovery v1.2
+echo                  EasyRecovery %Version%
 echo.
 echo.
 echo.
@@ -370,8 +372,8 @@ echo.
 echo.
 echo So you want to get rid of the contract on bootup?
 echo.
-set cont=""
-set /p cont=Continue? Y or N?
+set logo=""
+set /p logo=Continue? Y or N?
 echo.
 echo.
 if "%cont%"=="Y" goto :LOGO2
@@ -389,7 +391,85 @@ echo.
 %Fastboot% flash logo Files/logo/peregrine_logo_mod.bin
 echo.
 echo.
-ec              Enjoy!
+echo              Enjoy!
 pause
 echo            Press enter to continue
 goto :BOOTMENU
+
+:ROMMENU
+cls
+echo.
+echo.
+echo.
+echo.
+echo.
+echo            So you want to flash a rom?
+echo            Easy task if I say so myself.
+echo            Choose one of the following:
+echo      1) CyanogenMod
+echo      2) CarbonRom
+echo      3) Other
+echo      4) Exit
+set romS=""
+set /p romS=Choose a number between 1-4
+echo.
+echo.
+if "%romS%"=="1" set rom=%CD%\/Files/rom/cm.exe && set roms=cyanogenmod && goto :ROMFLASH
+if "%romS%"=="2" set rom=%CD%\/Files/rom/carbon.exe && set roms=carbon && goto :ROMFLASH
+if "%romS%"=="3" goto :UNSUP
+if "%romS%"=="4" goto :EOF
+
+:ROMFLASH
+cls
+echo.
+echo.
+echo.
+echo.
+if roms=carbon then
+    echo go to https://carbonrom.org/downloads/
+    echo download the latest rom and move it to the Files/rom folder
+    echo once there, rename the zip to carbon.zip
+if roms=cyanogenmod then
+	echo go to https://download.cyanogenmod.org/?device=peregrine
+    echo download the latest rom and move it to the Files/rom folder
+    echo once there, rename the zip to cm.zip
+echo press enter to continue
+pause
+cls
+echo you'll also need gapps, these can be found in the OP @ XDA
+echo Rename the gappsXXX zip to gapps.zip and move to Files/rom folder
+echo Press enter to continue
+pause
+cls
+echo Do you want to make a backup first? (recommended)
+echo In order to make a backup, you must select backup -> and backup
+echo Boot, Data, and System.
+%AdbExe% reboot recovery
+echo.
+echo Navigate to advanced/sideload and move the bottom slider (twrp)
+echo or install/sideload (cwm)
+echo press enter on your computer twice to continue
+pause
+pause
+echo.
+echo.
+%AdbExe% sideload %rom%
+echo press enter when in recovery and navigate to advanced/sideload (twrp)
+echo or install/sideload (cwm) once again.
+%AdbExe% sideload Files/rom/gapps.zip
+%AdbExe% reboot
+
+:REQUEST
+echo .
+CLS
+echo So you want to flash another rom?
+echo Well, i'm sorry to tell you that I don't support them.
+echo But you may request support if it is an official derivative of a rom.
+echo This is only for maintaining the quality of this toolkit.
+echo Who want's to be blamed for something they have no control over?
+echo There is a way to flash those zips as a workaround though.
+echo Select CM and rename the zip you want to cm.zip
+echo I don't support this and will laugh in your face if it does not boot.
+echo you should really learn how to flash a rom manually.
+sleep 15
+$CLS

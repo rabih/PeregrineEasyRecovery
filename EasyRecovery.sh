@@ -55,7 +55,7 @@ $ADB push Files/root/command /cache/recovery/command
 $ADB shell killall recovery
 sleep 3
 echo "Running automated recovery commands"
-sleep 4
+sleep 2
 echo "Enjoy root :)"
 echo "Press enter to continue"; read line
 $ADB reboot
@@ -214,8 +214,7 @@ f_BOOTMENU
 
 f_BOOTMENU () {
 unset choice
-while :
-do
+unset ROM
 echo "             Peregrine EasyRecovery v1.2"
 echo "             by somcom3x @ XDA"
 echo
@@ -254,37 +253,28 @@ case $choice in
 *) echo "\"$choice\" is not valid"
 sleep 2 ;;
 esac
-done
 }
-
 
 $CLS
 echo
 echo
 echo
-echo "                     One Click Root and Recovery"
+VERSION=
+VERSION="v1.3"
+echo "               Easy Recovery for Peregine variants"
+echo "               $VERSION "
+echo "                         By somcom3x"
 echo
-echo "              	   By Somcom3x @ XDA Developers"
-echo
-echo "                     Big Credits to ShabbyPenguin"
-echo
-echo
-echo "Press enter to continue"; read line
+echo "               Press enter to continue"
 $CLS
 echo
 echo
 echo
 echo  "              You need to enable usb debugging first"
-echo
 echo  "              Go to settings - applications - development"
 echo
-echo
-echo  "              Or in ICS and higher"
-echo  "              Settings - Developer Options - Android Debugging"
-echo
-echo  "              Or in 4.2 and higher"
 echo  "              Settings - About phone - Tap build number 7 times "
-echo  "             -Use ICS instructions "
+echo  "              Check developer settings"
 echo
 echo
 echo "Press enter to continue"; read line
@@ -341,5 +331,107 @@ echo "flashed logo!"
 sleep 6
 echo "             Enjoy!"
 sleep 5
+f_BOOTMENU
+}
+
+f_ROMMENU () {
+echo
+echo
+echo
+echo
+echo
+echo
+echo "So you want to flash a custom rom?"
+echo "loading."
+sleep 2
+$CLS
+echo "loading.."
+sleep 1
+$CLS
+echo "loading..."
+sleep 1
+echo "Done loading"
+echo
+sleep 1
+$CLS
+echo
+unset choice
+echo "Menu:"
+echo
+echo "1) CyanogenMod"
+echo "2) CarbonRom"
+echo "3) Another rom"
+echo "4) Quit"
+echo
+echo
+echo -n "Your choice? : "
+read choice
+echo
+echo
+case $choice in
+1) ROM=cm && f_ROMFLASH ;;
+2) ROM=carbon && f_ROMFLASH ;;
+3) f_REQUEST ;;
+4) exit 0 ;;
+*) echo "\"$choice\" is not valid"
+sleep 2 ;;
+esac
+done
+exit }
+
+f_ROMFLASH () {
+echo
+echo
+echo
+if (ROM=cm) ; then
+	echo "go to https://download.cyanogenmod.org/?device=peregrine";
+    echo "download the latest rom and move it to the Files/rom folder";
+    echo "once there, rename the zip to cm.zip ";
+fi
+if (ROM=carbon); then
+    echo "go to https://carbonrom.org/downloads/"
+    echo "download the latest rom and move it to the Files/rom folder";
+    echo "once there, rename the zip to carbon.zip ";
+fi
+echo "youll also need gapps, these can be found in the OP @ XDA"
+echo "Rename the gappsXXX zip to gapps.zip"
+echo "Press enter to continue"; read line
+sleep 3
+echo
+$ADB "wait-for-device" reboot recovery
+echo "Do you want to backup your phone? (recommended)"
+echo "In order to do this, click backup and backup boot, data, and system."; read line
+echo
+sleep 5
+echo "click advanced --> sideload"
+echo "press enter to continue"; read line
+echo "flashing"
+sleep 1
+$ADB "wait-for-device" sideload Files/rom/$ROM.zip
+echo "click advanced --> sideload once again"
+echo "press enter to continue"; read line
+sleep 2
+$ADB "wait-for-device" sideload Files/rom/gapps.zip
+echo "Enjoy the experience. ;)"
+echo "Remember, most roms are pre-rooted"
+unset ROM
+$ADB "wait-for-device" reboot recovery
+f_BOOTMENU
+}
+
+f_REQUEST () {
+echo
+$CLS
+echo "So you want to flash another rom?"
+echo "Well, I am sorry to tell you that I do not support them."
+echo "But you may request support if it is an official derivative of a rom."
+echo "This is only for maintaining the quality of this toolkit."
+echo "Who wants to be blamed for something they have no control over?"
+echo "There is a way to flash those zips as a workaround though."
+echo "Select CM and rename the zip you want to cm.zip"
+echo "I do not support this and will laugh in your face if it does not work"
+echo "you should really learn how to flash a rom manually."
+sleep 15
+$CLS
 f_BOOTMENU
 }
