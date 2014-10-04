@@ -4,7 +4,7 @@ cls
 color 0A
 echo.
 set Version=
-set Version=v1.3
+set Version=v1.3.1
 echo.
 echo                 Easy Recovery for Peregine variants
 echo                 %Version%
@@ -224,13 +224,13 @@ echo.
 echo go to http://bit.ly/UpVtsa and read the risks, continue to page 2
 pause
 echo are you sure???? Do you know the risks? Are you willing to do this??? pause
-$FASTBOOT oem get_unlock_data
+%Fastboot% oem get_unlock_data
 echo enter this code on page 2 as shown in the example:
 echo enter code on the website and press enter
 pause
 echo enter the key emailed to you here:
-set KEY=""
-set /p KEY=Please paste the number emailed here: 
+set key=""
+set /p key=Please paste the number emailed here:
 %Fastboot% oem unlock %key%
 echo FASTBOOT oem unlock %key%
 echo .

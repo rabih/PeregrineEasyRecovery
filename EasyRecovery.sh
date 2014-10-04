@@ -93,7 +93,7 @@ case $choice in
 2) RECOVERY=TWRP && f_FLASH ;;
 esac
 echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++"
-echo "         All in One Root and Recovery v1.2"
+echo "         All in One Root and Recovery $VERSION"
 echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++"
 echo
 echo
@@ -212,107 +212,8 @@ f_UNLOCK
 f_BOOTMENU
 }
 
-f_BOOTMENU () {
-unset choice
-unset ROM
-echo "             Peregrine EasyRecovery v1.2"
-echo "             by somcom3x @ XDA"
-echo
-echo
-echo
-echo
-echo
-echo
-sleep 5
-$CLS
-echo
-echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++"
-echo "Please Read Carefully"
-echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++"
-echo
-echo
-echo "Menu:"
-echo
-echo "1) Unlock the bootloader"
-echo "2) This phone has its bootloader unlocked but no root/recovery"
-echo "3) Just need root? (recovery required)"
-echo "4) Tired of having an unlocked bootloader? Lock it here."
-echo "5) Quit"
-echo
-echo
-echo -n "Your choice? : "
-read choice
-echo
-echo
-case $choice in
-1) f_WARNING ;;
-2) f_DEVICEMENU ;;
-3) $ADB reboot recovery && sleep 21 && f_ROOT ;;
-4) f_LOCK ;;
-5) exit 0 ;;
-*) echo "\"$choice\" is not valid"
-sleep 2 ;;
-esac
-}
 
-$CLS
-echo
-echo
-echo
-VERSION=
-VERSION="v1.3"
-echo "               Easy Recovery for Peregine variants"
-echo "               $VERSION "
-echo "                         By somcom3x"
-echo
-echo "               Press enter to continue"
-$CLS
-echo
-echo
-echo
-echo  "              You need to enable usb debugging first"
-echo  "              Go to settings - applications - development"
-echo
-echo  "              Settings - About phone - Tap build number 7 times "
-echo  "              Check developer settings"
-echo
-echo
-echo "Press enter to continue"; read line
-$CLS
-cd $PWD
-if [ -z $(which sudo 2>/dev/null) ]; then
-	$ADB kill-server
-else
-	sudo $ADB kill-server
-fi
-if [ -z $(which sudo 2>/dev/null) ]; then
-	$ADB start-server
-else
-	sudo $ADB start-server
-fi
-$CLS
-MYDEVICE=`$ADB shell getprop ro.product.model`
-rm -rf Files/Devices/*
-echo
-echo
-echo
-echo
-echo
-echo
-echo
-echo
-echo "      		 	 Your device model is: $MYDEVICE"
-echo 
-echo " 		 If this is incorrect please exit this program"
-echo
-echo
-echo
-echo 
-echo "Press enter to continue"; read line
-$CLS
-f_BOOTMENU
-
-f_LOGO() {
+f_LOGO () {
 echo
 echo
 echo " So you want to get rid of the contract on bootup?"
@@ -331,6 +232,7 @@ echo "flashed logo!"
 sleep 6
 echo "             Enjoy!"
 sleep 5
+$CLS
 f_BOOTMENU
 }
 
@@ -376,8 +278,8 @@ case $choice in
 *) echo "\"$choice\" is not valid"
 sleep 2 ;;
 esac
-done
-exit }
+exit
+}
 
 f_ROMFLASH () {
 echo
@@ -435,3 +337,107 @@ sleep 15
 $CLS
 f_BOOTMENU
 }
+
+f_BOOTMENU () {
+unset choice
+unset ROM
+echo "             Peregrine EasyRecovery $VERSION"
+echo "             by somcom3x @ XDA"
+echo
+echo
+echo
+echo
+echo
+echo
+sleep 5
+$CLS
+echo
+echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++"
+echo "Please Read Carefully"
+echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++"
+echo
+echo
+echo "Menu:"
+echo
+echo "1) Unlock the bootloader"
+echo "2) This phone has its bootloader unlocked but no root/recovery"
+echo "3) Just need root? (recovery required)"
+echo "4) Tired of having an unlocked bootloader? Lock it here."
+echo "5) Flash the stock motorola logo."
+echo "6) Flash a custom rom."
+echo "7) Quit"
+echo
+echo
+echo -n "Your choice? : "
+read choice
+echo
+echo
+case $choice in
+1) f_WARNING ;;
+2) f_DEVICEMENU ;;
+3) $ADB reboot recovery && sleep 21 && f_ROOT ;;
+4) f_LOCK ;;
+5) f_LOGO ;;
+6) f_ROMMENU ;;
+7) exit 0 ;;
+*) echo "\"$choice\" is not valid"
+sleep 2
+esac
+}
+
+$CLS
+echo
+echo
+echo
+VERSION=
+VERSION="v1.3.	1"
+echo "               Easy Recovery for Peregine variants"
+echo "               $VERSION "
+echo "                         By somcom3x"
+echo
+echo "               Press enter to continue"
+$CLS
+echo
+echo
+echo
+echo  "              You need to enable usb debugging first"
+echo  "              Go to settings - applications - development"
+echo
+echo  "              Settings - About phone - Tap build number 7 times "
+echo  "              Check developer settings"
+echo
+echo
+echo "Press enter to continue"; read line
+$CLS
+cd $PWD
+if [ -z $(which sudo 2>/dev/null) ]; then
+	$ADB kill-server
+else
+	sudo $ADB kill-server
+fi
+if [ -z $(which sudo 2>/dev/null) ]; then
+	$ADB start-server
+else
+	sudo $ADB start-server
+fi
+$CLS
+MYDEVICE=`$ADB shell getprop ro.product.model`
+rm -rf Files/Devices/*
+echo
+echo
+echo
+echo
+echo
+echo
+echo
+echo
+echo "      		 	 Your device model is: $MYDEVICE"
+echo
+echo " 		 If this is incorrect please exit this program"
+echo
+echo
+echo
+echo
+echo "Press enter to continue"; read line
+$CLS
+f_BOOTMENU
