@@ -24,33 +24,10 @@ CLS='printf "\033c"'
 # End section, thanks Firon (LEGACY)!
 
 f_ROOT () {
-unset ROOTSN
-case $ROOTSN in
-1) ROOTS=superuser ;;
-2) ROOTS=supersu ;;
-3) exit ;;
-*) echo "\"$ROOTSN\" is not valid"
-esac
-echo "Choose a root program"
-echo "Menu:"
-echo
-echo "1) Root and Install Superuser"
-echo "2) Root and Install SuperSU"
-echo "3) Do not root (quit)"
-echo
-echo
-read ROOTSN
-sleep 2
 $CLS
-sleep 1
+sleep 3
 echo "Pushing Recovery Script"
-echo " ... "
-sleep 1
-echo " ..................... "
-sleep 2
-echo " ........................ "
-sleep 1
-$ADB push Files/root/$ROOTS/$ROOTS.zip /storage/sdcard0/$ROOTS.zip
+$ADB push Files/root/supersu.zip /storage/sdcard0/supersu.zip
 $ADB push Files/root/command /cache/recovery/command
 $ADB shell killall recovery
 sleep 3
@@ -80,7 +57,7 @@ $CLS
 echo
 echo
 echo "Please press the volume down key to scroll to recovery and the volume up key to select."
-echo
+echo 
 echo "Press enter to continue when the recovery menu appears"; read line
 f_ROOT
 }
@@ -207,11 +184,10 @@ echo "Type Y/N"
 echo
 read choice
 done
-$CLS
+f_EMPTY
 f_UNLOCK
 f_BOOTMENU
 }
-
 
 f_LOGO () {
 echo
@@ -390,13 +366,18 @@ echo
 echo
 echo
 VERSION=
-VERSION="v1.3.	1"
+VERSION="v1.3.2"
 echo "               Easy Recovery for Peregine variants"
 echo "               $VERSION "
 echo "                         By somcom3x"
 echo
 echo "               Press enter to continue"
+echo
+echo
+echo
+echo
 $CLS
+echo
 echo
 echo
 echo
@@ -431,13 +412,29 @@ echo
 echo
 echo
 echo
-echo "      		 	 Your device model is: $MYDEVICE"
+echo "           Your device model is: $MYDEVICE"
 echo
 echo " 		 If this is incorrect please exit this program"
-echo
-echo
-echo
-echo
-echo "Press enter to continue"; read line
+echo "           Press enter to continue"; read line
 $CLS
 f_BOOTMENU
+
+f_LOGO() {
+echo
+echo
+echo " So you want to get rid of the contract on bootup?"
+echo "Press enter to continue."
+pause
+echo
+echo
+$CLS
+echo
+echo
+$FASTBOOT flash logo Files/logo/peregrine_logo_mod.bin
+echo "flashing logo"
+sleep 6
+echo "             Enjoy!"
+pause
+sleep 5
+f_BOOTMENU
+}
