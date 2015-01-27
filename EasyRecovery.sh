@@ -20,7 +20,7 @@ chmod +x $ADB
 chmod +x $FASTBOOT
 chmod +x $MFASTBOOT
 
-CLS='printf "\033c"'
+CLS='printf "\033c'
 # End section, thanks Firon (LEGACY)!
 
 f_ROOT () {
