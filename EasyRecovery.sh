@@ -1,20 +1,19 @@
 #!/bin/sh
 # Unix OS Sniffer and $adb setup by Firon
 platform=`uname`;
-ADB=$PWD"/Files/tools/adb";
-FASTBOOT=$PWD"/Files/tools/fastboot";
-MFASTBOOT=$PWD"/Files/tools/mfastboot";
+ADB=$(which adb);
+FASTBOOT=$(which fastboot);
+MFASTBOOT=$(which mfastboot);
 cd "$(dirname "$0")"
 if [ -z $(which adb) ]; then
-	ADB=$PWD"/Files/tools/adb";
+    ADB=$PWD"/Files/tools/adb";
     FASTBOOT=$PWD"/Files/tools/fastboot";
     MFASTBOOT=$PWD"/Files/tools/mfastboot";
-	if [ "$platform" == 'Darwin' ]; then
-		ADB=$PWD"/Files/tools/adb.osx"
-		FASTBOOT=$PWD"/Files/tools/fastboot.osx"
+    if [ "$platform" == 'Darwin' ]; then
+        ADB=$PWD"/Files/tools/adb.osx"
+        FASTBOOT=$PWD"/Files/tools/fastboot.osx"
         MFASTBOOT=$PWD"/Files/tools/mfastboot.osx";
-
-	fi
+    fi
 fi
 chmod +x $ADB
 chmod +x $FASTBOOT
